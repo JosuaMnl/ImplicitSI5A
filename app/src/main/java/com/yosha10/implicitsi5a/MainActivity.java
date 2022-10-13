@@ -1,6 +1,7 @@
 package com.yosha10.implicitsi5a;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -53,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
         btnBukaLokasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getLokasi = etLokasi.getText().toString();
+                Uri location = Uri.parse("geo:0,0?q=" + getLokasi);
+                // Membuka Google Maps
+                Intent intentLokasi = new Intent(Intent.ACTION_VIEW, location);
+                startActivity(intentLokasi);
             }
         });
 
@@ -61,7 +66,15 @@ public class MainActivity extends AppCompatActivity {
         btnBagikanTeks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getText = etText.getText().toString();
 
+                String tipeText = "text/plain";
+                new ShareCompat
+                        .IntentBuilder(MainActivity.this)
+                        .setType(tipeText)
+                        .setChooserTitle("Bagikan Teks Ini Bang")
+                        .setText(getText)
+                        .startChooser();
             }
         });
     }
